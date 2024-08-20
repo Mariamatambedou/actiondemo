@@ -9,8 +9,6 @@ on:
         default: 'latest'
 
 env:
-  IMAGE_REG: ghcr.io
-  IMAGE_REPO: benc-uk/python-demoapp
   APP_NAME: python-demoapp
   CONTAINER_NAME: python-demoapp-container
 
@@ -23,15 +21,15 @@ jobs:
       - name: 'Checkout code'
         uses: actions/checkout@v2
 
-      - name: 'Build Docker image'
+      - name: 'Build Docker image locally'
         run: |
-          sudo docker build -t $IMAGE_REPO:$IMAGE_TAG .
+          sudo docker build -t $APP_NAME:$IMAGE_TAG .
 
       - name: 'Stop and remove existing container (if any)'
         run: |
           sudo docker stop $CONTAINER_NAME || true
           sudo docker rm $CONTAINER_NAME || true
 
-      - name: 'Run Docker container'
+      - name: 'Run Docker container with local image'
         run: |
-          sudo docker run -d --name $CONTAINER_NAME -p 8088:80 $IMAGE_REPO:$IMAGE_TAG
+          sudo docker run -d --name $CONTAINER_NAME -p 8088:80 $APP_NAME:$IMAGE_TAG
