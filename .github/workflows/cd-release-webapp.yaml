@@ -17,9 +17,7 @@ env:
 jobs:
   deploy-to-local-vm:
     name: 'Deploy to Local VM'
-    runs-on:
-      - self-hosted
-      - label-1
+    runs-on: self-hosted
 
     steps:
       - name: 'Checkout code'
