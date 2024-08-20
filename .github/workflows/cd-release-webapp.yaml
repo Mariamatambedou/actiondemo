@@ -21,9 +21,17 @@ jobs:
       - name: 'Checkout code'
         uses: actions/checkout@v2
 
+      - name: 'Validate IMAGE_TAG'
+        run: |
+          if [ -z "$IMAGE_TAG" ]; then
+            echo "IMAGE_TAG is not set or empty, defaulting to 'latest'"
+            IMAGE_TAG='latest'
+          fi
+          echo "Using IMAGE_TAG=$IMAGE_TAG"
+
       - name: 'Build Docker image locally'
         run: |
-          sudo docker build -t $APP_NAME:$IMAGE_TAG .
+          sudo docker build -t $APP_NAME:${IMAGE_TAG:-latest} .
 
       - name: 'Stop and remove existing container (if any)'
         run: |
@@ -32,4 +40,4 @@ jobs:
 
       - name: 'Run Docker container with local image'
         run: |
-          sudo docker run -d --name $CONTAINER_NAME -p 8088:80 $APP_NAME:$IMAGE_TAG
+          sudo docker run -d --name $CONTAINER_NAME -p 8088:80 $APP_NAME:${IMAGE_TAG:-latest}
