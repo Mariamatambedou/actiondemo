@@ -31,7 +31,8 @@ jobs:
 
       - name: 'Build Docker image locally'
         run: |
-          sudo docker build -t $APP_NAME:${IMAGE_TAG:-latest} .
+          sudo docker build -t $APP_NAME:${IMAGE_TAG:-latest} -f build/Dockerfile .
+
 
       - name: 'Stop and remove existing container (if any)'
         run: |
