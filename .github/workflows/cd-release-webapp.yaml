@@ -25,13 +25,13 @@ jobs:
 
       - name: 'Build Docker image'
         run: |
-          docker build -t $IMAGE_REPO:$IMAGE_TAG .
+          sudo docker build -t $IMAGE_REPO:$IMAGE_TAG .
 
       - name: 'Stop and remove existing container (if any)'
         run: |
-          docker stop $CONTAINER_NAME || true
-          docker rm $CONTAINER_NAME || true
+          sudo docker stop $CONTAINER_NAME || true
+          sudo docker rm $CONTAINER_NAME || true
 
       - name: 'Run Docker container'
         run: |
-          docker run -d --name $CONTAINER_NAME -p 8088:80 $IMAGE_REPO:$IMAGE_TAG
+          sudo docker run -d --name $CONTAINER_NAME -p 8088:80 $IMAGE_REPO:$IMAGE_TAG
