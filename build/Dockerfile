@@ -1,20 +1,20 @@
-# Étape 1 : Utiliser une image de base Python officielle
+# Utiliser une image de base Python
 FROM python:3.9-slim
 
-# Étape 2 : Définir le répertoire de travail dans le conteneur
+# Définir le répertoire de travail
 WORKDIR /app
 
-# Étape 3 : Copier les fichiers de dépendances dans le conteneur
-COPY requirements.txt .
+# Copier le fichier requirements.txt depuis le répertoire source dans le conteneur
+COPY ../src/requirements.txt .
 
-# Étape 4 : Installer les dépendances Python
+# Installer les dépendances
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Étape 5 : Copier le reste du code de l'application dans le conteneur
-COPY . .
+# Copier le reste du code depuis le répertoire source dans le conteneur
+COPY ../src .
 
-# Étape 6 : Exposer le port sur lequel l'application va tourner (ex: 5000 pour Flask)
+# Exposer le port sur lequel l'application tournera
 EXPOSE 5000
 
-# Étape 7 : Spécifier la commande pour démarrer l'application
+# Spécifier la commande pour démarrer l'application
 CMD ["python", "app.py"]
