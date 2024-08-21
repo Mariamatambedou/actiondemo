@@ -17,4 +17,4 @@ COPY ../src .
 EXPOSE 5000
 
 # Spécifier la commande pour démarrer l'application
-CMD ["python", "app.py"]
+CMD ["python", "run.py"]
