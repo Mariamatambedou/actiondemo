@@ -29,7 +29,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: /build/Dockerfile  # Chemin spécifique vers le Dockerfile
+          file: /build/Dockerfile
           push: true
           tags: tambedou/action-image:latest
 
