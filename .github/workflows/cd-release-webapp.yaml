@@ -28,8 +28,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./build  # Chemin vers le répertoire contenant le Dockerfile
-          file: ./build/Dockerfile  # Chemin spécifique vers le Dockerfile
+          context: .
+          file: /build/Dockerfile  # Chemin spécifique vers le Dockerfile
           push: true
           tags: tambedou/action-image:latest
 
