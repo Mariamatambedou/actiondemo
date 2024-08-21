@@ -13,8 +13,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copier le reste du code depuis le répertoire src dans le conteneur
 COPY ../src .
 
-# Exposer le port sur lequel l'application tournera
 EXPOSE 5000
 
-# Spécifier la commande pour démarrer l'application
 CMD ["python", "run.py"]
