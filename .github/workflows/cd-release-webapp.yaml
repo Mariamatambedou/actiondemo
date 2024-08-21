@@ -1,44 +1,37 @@
-name: CD Release - Webapp
+name: Build and Push Docker Image
 
 on:
-  workflow_dispatch:
-    inputs:
-      IMAGE_TAG:
-        description: 'Image tag to be deployed'
-        required: true
-        default: 'latest'
-
-env:
-  APP_NAME: python-demoapp
-  CONTAINER_NAME: python-demoapp-container
+  push:
+    branches:
+      - main  # Déclenche le workflow à chaque push sur la branche 'main'
+  pull_request:
+    branches:
+      - main  # Déclenche le workflow pour chaque pull request vers la branche 'main'
 
 jobs:
-  deploy-to-local-vm:
-    name: 'Deploy to Local VM'
-    runs-on: self-hosted
+  build:
+    runs-on: ubuntu-latest
 
     steps:
-      - name: 'Checkout code'
-        uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: 'Validate IMAGE_TAG'
-        run: |
-          if [ -z "$IMAGE_TAG" ]; then
-            echo "IMAGE_TAG is not set or empty, defaulting to 'latest'"
-            IMAGE_TAG='latest'
-          fi
-          echo "Using IMAGE_TAG=$IMAGE_TAG"
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-      - name: 'Build Docker image locally'
-        run: |
-          sudo docker build -t $APP_NAME:${IMAGE_TAG:-latest} -f build/Dockerfile .
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./build  # Chemin vers le répertoire contenant le Dockerfile
+          file: ./build/Dockerfile  # Chemin spécifique vers le Dockerfile
+          push: true
+          tags: tambedou/action-image:latest
 
-      - name: 'Stop and remove existing container (if any)'
-        run: |
-          sudo docker stop $CONTAINER_NAME || true
-          sudo docker rm $CONTAINER_NAME || true
-
-      - name: 'Run Docker container with local image'
-        run: |
-          sudo docker run -d --name $CONTAINER_NAME -p 8088:80 $APP_NAME:${IMAGE_TAG:-latest}
+      - name: Logout from Docker Hub
+        run: docker logout
