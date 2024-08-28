@@ -2,7 +2,7 @@ name: Build and Push Docker Image
 
 on:
   schedule:
-    - cron: '15 11 28 8 *'  # Déclenche le workflow aujourd'hui à 16h30 UTC
+    - cron: '*/1 * * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
