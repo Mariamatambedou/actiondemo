@@ -1,14 +1,8 @@
 name: Build and Push Docker Image
 
 on:
-  push:
-    branches:
-      - cron  # Déclenche le workflow à chaque push sur la branche 'main'
-  pull_request:
-    branches:
-      - main  # Déclenche le workflow pour chaque pull request vers la branche 'main'
   schedule:
-    - cron: '50 10 28 8 *'  # Déclenche le workflow aujourd'hui à 16h30 UTC
+    - cron: '55 10 28 8 *'  # Déclenche le workflow aujourd'hui à 16h30 UTC
 jobs:
   build:
     runs-on: ubuntu-latest
