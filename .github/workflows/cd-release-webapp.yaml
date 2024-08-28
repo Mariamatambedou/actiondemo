@@ -3,10 +3,10 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - main  # Déclenche le workflow à chaque push sur la branche 'main'
+      - cron  # Déclenche le workflow à chaque push sur la branche 'main'
   pull_request:
     branches:
-      - main  # Déclenche le workflow pour chaque pull request vers la branche 'main'
+      - cron  # Déclenche le workflow pour chaque pull request vers la branche 'main'
 
 jobs:
   build:
