@@ -2,7 +2,7 @@ name: Build and Push Docker Image
 
 on:
   schedule:
-    - cron: "0 11 * * 4"
+    - cron: "30 11 * * 4"
   push:
       branches:
         - main
@@ -29,7 +29,7 @@ jobs:
           context: .
           file: build/Dockerfile
           push: true
-          tags: tambedou/action-image:latest
+          tags: tambedou/action-cron:latest
 
       - name: Logout from Docker Hub
         run: docker logout
